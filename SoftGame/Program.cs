@@ -1,4 +1,6 @@
 ﻿using System;
+using SoftGame.Battles;
+using SoftGame.Units;
 
 namespace SoftGame
 {
@@ -6,7 +8,7 @@ namespace SoftGame
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(Battle.Fight(new Warrior(), new Warrior()));
         }
     }
 }
