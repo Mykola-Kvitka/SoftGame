@@ -3,13 +3,24 @@ using SoftGame.Skills.Interfaces;
 
 namespace SoftGame.Units
 {
-    public class Warrior : IAttacker, IDamageable
+    public class Warrior : IUnit
     {
-        public double Health { protected set; get; }
-        public double Attack { protected set; get; }
-
+        protected int Health;
+        protected double Attack;
         public bool IsAlive => Health > 0;
 
+        int IUnit.Health
+        {
+            get => Health;
+            set => Health = value;
+        }
+
+        double IUnit.Attack
+        {
+            get => Attack;
+            set => Attack = value;
+        }
+        
         public Warrior()
         {
             Health = UnitsCoufiguration.WarriorHealth;
@@ -18,13 +29,18 @@ namespace SoftGame.Units
 
         public virtual void TakeDamage(double damage)
         {
-            Health -= damage;
+            Health -= (int)damage;
         }
 
-        public virtual bool AttackTarget(Warrior warrior)
+        public virtual bool AttackTarget(IUnit warrior)
         {
             warrior.TakeDamage(Attack);
             return  warrior.IsAlive;
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }
