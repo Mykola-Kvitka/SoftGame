@@ -5,8 +5,8 @@ namespace SoftGame.Units
 {
     public class Warrior : IAttacker, IDamageable
     {
-        protected double Health;
-        protected double Attack;
+        public double Health { protected set; get; }
+        public double Attack { protected set; get; }
 
         public bool IsAlive => Health > 0;
 
