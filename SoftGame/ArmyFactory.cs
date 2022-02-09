@@ -23,34 +23,35 @@ namespace SoftGame
             }
             else if (type.IsClass)
             {
-                return UnitsFactory(unit as IUnit, count);
+                return UnitsFactory(type.Name, count);
             }
             
             return new List<IUnit>();;
         }
         
-        private static IEnumerable<IUnit> UnitsFactory(IUnit unit, int count)
-        {
-            var warriors = new List<IUnit>();
-            
-            for (int i = 0; i < count; i++)
-            {
-                warriors.Add((IUnit) unit.Clone());
-            }
-
-            return warriors;
-        }
         private static List<IUnit> UnitsFactory(string unit, int count)
         {
+            var warriors = new List<IUnit>();
+
             switch (unit)
             {
                 case "Warrior":
-                    return (List<IUnit>) UnitsFactory(new Warrior(), count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        warriors.Add(new Warrior());
+                    }
+                    break;
                 case "Knight":
-                    return (List<IUnit>) UnitsFactory(new Knight(), count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        warriors.Add(new Knight());
+                    }
+                    break;
                 default:
-                    return new List<IUnit>();
+                    throw new ArgumentException("This class don`t implement at this fabric");
+                    break;
             } 
+            return warriors;
         }
     }
 }

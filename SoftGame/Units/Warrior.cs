@@ -6,7 +6,7 @@ namespace SoftGame.Units
     public class Warrior : IUnit
     {
         protected int Health;
-        protected double Attack;
+        protected int Attack;
         public bool IsAlive => Health > 0;
 
         int IUnit.Health
@@ -15,7 +15,7 @@ namespace SoftGame.Units
             set => Health = value;
         }
 
-        double IUnit.Attack
+        int IUnit.Attack
         {
             get => Attack;
             set => Attack = value;
@@ -27,20 +27,15 @@ namespace SoftGame.Units
             Attack = UnitsCoufiguration.WarriorAttack;
         }
 
-        public virtual void TakeDamage(double damage)
+        public virtual void TakeDamage(int damage)
         {
-            Health -= (int)damage;
+            Health -= damage;
         }
 
         public virtual bool AttackTarget(IUnit warrior)
         {
             warrior.TakeDamage(Attack);
             return  warrior.IsAlive;
-        }
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }
