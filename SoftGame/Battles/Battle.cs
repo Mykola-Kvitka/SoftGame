@@ -24,8 +24,8 @@ namespace SoftGame.Battles
 
         public static bool Fight(Army army1, Army army2)
         {
-            var aliveUnitsArmy1Enumerator = army1.GetAllAliveUnits().GetEnumerator();
-            var aliveUnitsArmy2Enumerator = army2.GetAllAliveUnits().GetEnumerator();
+            var aliveUnitsArmy1Enumerator = army1.GetAllAliveUnits(u => u.IsAlive).GetEnumerator();
+            var aliveUnitsArmy2Enumerator = army2.GetAllAliveUnits(u => u.IsAlive).GetEnumerator();
 
             using (aliveUnitsArmy1Enumerator)
             using (aliveUnitsArmy2Enumerator)
