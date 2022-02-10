@@ -20,7 +20,7 @@ namespace SoftGame.Units
             double heal;
             var healthBeforeAttack = warrior.Health;
             
-            warrior.TakeDamage(Attack);
+            base.AttackTarget(warrior);
 
             if (warrior.IsAlive)
             {
