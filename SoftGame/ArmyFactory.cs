@@ -47,6 +47,13 @@ namespace SoftGame
                         warriors.Add(new Knight());
                     }
                     break;
+                case "Vampire":
+                    for (int i = 0; i < count; i++)
+                    {
+                        warriors.Add(new Vampire());
+                    }
+                    break;
+
                 default:
                     throw new ArgumentException("This class don`t implement at this fabric");
                     break;

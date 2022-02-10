@@ -3,6 +3,7 @@
     public enum UnitNames
     {
         Warrior,
-        Knight
+        Knight,
+        Vampire
     }
 }
