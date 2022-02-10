@@ -2,12 +2,12 @@
 
 namespace SoftGame.Skills.Interfaces
 {
-    public interface IUnit : IAttacker, IDamageable
+    public abstract class IUnit : IAttacker, IDamageable
     {
-        public int Health {  get; protected set; }
-        public int Attack { protected set; get; }
-
-        public bool IsAlive => Health > 0;
-
+        public int Health;
+        public int Attack;
+        public virtual bool IsAlive => Health > 0;
+        public abstract bool AttackTarget(IUnit warrior);
+        public abstract void TakeDamage(int damage);
     }
 }
