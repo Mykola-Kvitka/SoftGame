@@ -6,7 +6,7 @@ namespace SoftGame.Units
 {
     public class Vampire : Warrior
     {
-        public int Vampirism { get; protected set; }
+        public double Vampirism { get; protected set; }
 
         public Vampire()
         {
@@ -24,18 +24,18 @@ namespace SoftGame.Units
 
             if (warrior.IsAlive)
             {
-                heal = (double)(healthBeforeAttack - warrior.Health) / 100.0d * (double)Vampirism;
+                heal = (double)(healthBeforeAttack - warrior.Health) / 100.0d * Vampirism;
             }
             else
             {
-                heal = healthBeforeAttack / 100 * Vampirism;
+                heal =  (double)healthBeforeAttack / 100.0d * Vampirism;
             }
 
             Health += (int)Math.Round(heal);
             
-            if (Health > 40)
+            if (Health > UnitsCoufiguration.VampireHealth)
             {
-                Health = 40;
+                Health = UnitsCoufiguration.VampireHealth;
             }
 
             return warrior.IsAlive;

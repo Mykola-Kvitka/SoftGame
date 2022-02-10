@@ -13,7 +13,7 @@
         public static int DefenseAttack = 3;
         
         public static int VampireHealth = 40;
-        public static int VampireVampirism= 50;
+        public static double VampireVampirism= 50;
         public static int VampireAttack = 4;
 
     }
