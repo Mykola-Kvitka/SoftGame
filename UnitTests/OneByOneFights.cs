@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SoftGame.Battles;
+using SoftGame.Skills.Interfaces;
 using SoftGame.Units;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace UnitTests
     {
         [Theory]
         [MemberData(nameof(OneByOneFight))]
-        public void Fights(Warrior warrior1, Warrior warrior2, bool shouldSucceed)
+        public void Fights(IUnit warrior1, IUnit warrior2, bool shouldSucceed)
         {
             Assert.Equal(shouldSucceed, Battle.Fight(warrior1, warrior2));
         }

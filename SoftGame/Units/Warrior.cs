@@ -1,14 +1,14 @@
-﻿using SoftGame.Configuration;
+﻿using System;
+using SoftGame.Configuration;
 using SoftGame.Skills.Interfaces;
 
 namespace SoftGame.Units
 {
-    public class Warrior : IAttacker, IDamageable
+    public class Warrior : IUnit
     {
-        public double Health { protected set; get; }
-        public double Attack { protected set; get; }
-
-        public bool IsAlive => Health > 0;
+        public int Health { get; protected set; }
+        public int Attack{ get; protected set; }
+        public override bool IsAlive => Health > 0;
 
         public Warrior()
         {
@@ -16,12 +16,12 @@ namespace SoftGame.Units
             Attack = UnitsCoufiguration.WarriorAttack;
         }
 
-        public virtual void TakeDamage(double damage)
+        public override void TakeDamage(int damage)
         {
             Health -= damage;
         }
 
-        public virtual bool AttackTarget(Warrior warrior)
+        public override bool AttackTarget(IUnit warrior)
         {
             warrior.TakeDamage(Attack);
             return  warrior.IsAlive;
