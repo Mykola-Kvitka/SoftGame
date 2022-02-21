@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SoftGame.Skills.Interfaces;
 using SoftGame.Units;
 
@@ -24,40 +26,64 @@ namespace SoftGame.Battles
 
         public static bool Fight(Army army1, Army army2)
         {
-            var aliveUnitsArmy1Enumerator = army1.GetAllAliveUnits(u => u.IsAlive).GetEnumerator();
-            var aliveUnitsArmy2Enumerator = army2.GetAllAliveUnits(u => u.IsAlive).GetEnumerator();
+            var aliveUnitsArmy1 = army1.GetAllAliveUnits(u => u.IsAlive);
+            var aliveUnitsArmy2 = army2.GetAllAliveUnits(u => u.IsAlive);
 
-            using (aliveUnitsArmy1Enumerator)
-            using (aliveUnitsArmy2Enumerator)
+            while (aliveUnitsArmy1 != null && aliveUnitsArmy2 != null)
             {
-                aliveUnitsArmy1Enumerator.MoveNext();
-                aliveUnitsArmy2Enumerator.MoveNext();
-                
-                while (aliveUnitsArmy1Enumerator.Current != null &&
-                        aliveUnitsArmy2Enumerator.Current != null )
+                if (aliveUnitsArmy1.First().GetType() == typeof(Lancer))
                 {
-                    if (Fight(aliveUnitsArmy1Enumerator.Current, aliveUnitsArmy2Enumerator.Current))
-                    {
-                        aliveUnitsArmy2Enumerator.MoveNext();
-                    }
-                    else
-                    {
-                        aliveUnitsArmy1Enumerator.MoveNext();
-                    }
+                    var lancer = (Lancer) aliveUnitsArmy1.First();
+                    Fight(lancer, aliveUnitsArmy2, true);
                 }
-
-                if (aliveUnitsArmy1Enumerator.Current == null)
+                else if (aliveUnitsArmy2.First().GetType() == typeof(Lancer))
                 {
-                    return false;
-                }
-                else if(aliveUnitsArmy2Enumerator.Current == null)
-                {
-                    return true;
+                    var lancer = (Lancer) aliveUnitsArmy2.First();
+                    Fight(lancer, aliveUnitsArmy2, false);
                 }
                 else
                 {
-                    throw new Exception("Draw");
+                    Fight(aliveUnitsArmy1.First(), aliveUnitsArmy2.First());
                 }
+
+                aliveUnitsArmy1 = army1.GetAllAliveUnits(u => u.IsAlive);
+                aliveUnitsArmy2 = army2.GetAllAliveUnits(u => u.IsAlive);
+            }
+
+            return aliveUnitsArmy1 != null;
+        }
+
+        private static void Fight(Lancer warrior1, List<IUnit> army, bool IsFirstArmy)
+        {
+            if (IsFirstArmy)
+            {
+                while (warrior1.AttackTarget(army.First()) && army.First().AttackTarget(warrior1))
+                {
+                    if (army.Count > 1)
+                    {
+                        GiveDamageToSecoundWarrior(warrior1, army);
+                    }
+                }
+            }
+            else
+            {
+                while (army.First().AttackTarget(warrior1) && warrior1.AttackTarget(army.First()))
+                {
+                    if (army.Count > 1)
+                    {
+                        GiveDamageToSecoundWarrior(warrior1, army);
+                    }
+                }
+            }
+        }
+
+        private static void GiveDamageToSecoundWarrior(Lancer warrior1, List<IUnit> army)
+        {
+            army[1].TakeDamage(warrior1.AttackToSecoundTarget);
+
+            if (!army[1].IsAlive)
+            {
+                army.Remove(army[1]);
             }
         }
     }

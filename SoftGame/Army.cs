@@ -16,9 +16,9 @@ namespace SoftGame
             _army.AddRange(ArmyFactory.UnitsFactoryGeneric(unit,count));
         }
 
-        public List<IUnit> GetAllAliveUnits(Expression<Func<IUnit, bool>> predicate)
+        public List<IUnit> GetAllAliveUnits(Func<IUnit, bool> predicate)
         {
-            return _army.Where(predicate.Compile()).ToList();
+            return _army.Where(predicate).ToList();
         }
     }
 }
